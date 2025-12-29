@@ -106,7 +106,7 @@ func (d *SataDevice) readSMARTData() (*AtaSmartPageRaw, error) {
 	}
 
 	page := AtaSmartPageRaw{}
-	if err := binary.Read(bytes.NewBuffer(respBuf[:362]), binary.LittleEndian, &page); err != nil {
+	if err := binary.Read(bytes.NewBuffer(respBuf[:364]), binary.LittleEndian, &page); err != nil {
 		return nil, err
 	}
 

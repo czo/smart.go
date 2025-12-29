@@ -491,6 +491,8 @@ type AtaSmartAttrRaw struct {
 type AtaSmartPageRaw struct {
 	Version uint16
 	Attrs   [30]AtaSmartAttrRaw
+	OfflineDataCollectionStatus uint8
+	SelfTestExecStatus uint8
 }
 
 // SMART log address 00h
@@ -760,6 +762,8 @@ func checkTempRange(t int8, t1 int8, t2 int8, lo *int8, hi *int8) bool {
 type AtaSmartPage struct {
 	Version uint16
 	Attrs   map[uint8]AtaSmartAttr
+	OfflineDataCollectionStatus uint8
+	SelfTestExecStatus uint8
 }
 
 func (d *SataDevice) ReadSMARTData() (*AtaSmartPage, error) {
@@ -771,6 +775,8 @@ func (d *SataDevice) ReadSMARTData() (*AtaSmartPage, error) {
 	page := AtaSmartPage{}
 	page.Version = pageRaw.Version
 	page.Attrs = make(map[uint8]AtaSmartAttr)
+	page.OfflineDataCollectionStatus = pageRaw.OfflineDataCollectionStatus
+	page.SelfTestExecStatus = pageRaw.SelfTestExecStatus
 
 	for _, a := range pageRaw.Attrs {
 		if a.Id == 0 {
